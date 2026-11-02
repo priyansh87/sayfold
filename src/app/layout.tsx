@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { ServiceWorkerRegister } from "@/components/pwa/ServiceWorkerRegister";
 
 export const metadata: Metadata = {
   title: "Sayfold — Voice-First Knowledge Vault",
@@ -9,6 +10,10 @@ export const metadata: Metadata = {
     capable: true,
     statusBarStyle: "default",
     title: "Sayfold",
+  },
+  icons: {
+    icon: "/icons/icon.svg",
+    apple: "/icons/icon-192.png",
   },
 };
 
@@ -28,9 +33,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen bg-[var(--background)] text-[var(--foreground)] selection:bg-stone-200 dark:selection:bg-stone-800">
+        <ServiceWorkerRegister />
         {children}
       </body>
     </html>
   );
 }
-

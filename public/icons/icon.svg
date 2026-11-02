@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" rx="112" fill="#18181b"/>
+  <!-- Subtle inner border -->
+  <rect x="16" y="16" width="480" height="480" rx="96" fill="none" stroke="#27272a" stroke-width="4"/>
+  <!-- Open Book Silhouette -->
+  <path d="M128 176c32-16 80-16 128 0v176c-48-16-96-16-128 0V176z" fill="#faf9f6" opacity="0.95"/>
+  <path d="M384 176c-32-16-80-16-128 0v176c48-16 96-16 128 0V176z" fill="#ded0bd" opacity="0.95"/>
+  <!-- Mic Wave Accent in Center -->
+  <circle cx="256" cy="192" r="14" fill="#18181b"/>
+  <path d="M246 216c0 5.5 4.5 10 10 10s10-4.5 10-10v-10h-20v10z" fill="#18181b"/>
+  <path d="M256 226v16" stroke="#18181b" stroke-width="4" stroke-linecap="round"/>
+</svg>
