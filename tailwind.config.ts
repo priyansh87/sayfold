@@ -11,6 +11,17 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        sayfold: {
+          bg: "#F6F1E9",
+          charcoal: "#1F1E1B",
+          accent: "#E8643C",
+          "accent-hover": "#D4532B",
+          "accent-light": "#FDF2EC",
+          border: "#E7DFD3",
+          muted: "#6E6B65",
+          card: "#FFFFFF",
+          "card-dark": "#161513",
+        },
         parchment: {
           50: "#faf8f5",
           100: "#f5f1ea",
@@ -38,8 +49,8 @@ export default {
         },
       },
       fontFamily: {
-        serif: ["Charter", "Georgia", "Cambria", "Times New Roman", "serif"],
-        sans: ["-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "sans-serif"],
+        serif: ["var(--font-newsreader)", "Newsreader", "Fraunces", "Charter", "Georgia", "Cambria", "serif"],
+        sans: ["var(--font-inter)", "Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],
       },
     },
   },

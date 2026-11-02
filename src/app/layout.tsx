@@ -1,8 +1,23 @@
 import type { Metadata, Viewport } from "next";
+import { Newsreader, Inter } from "next/font/google";
 import "./globals.css";
 import { ServiceWorkerRegister } from "@/components/pwa/ServiceWorkerRegister";
 
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  variable: "--font-newsreader",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://sayfold.app"),
   title: "Sayfold — Voice-First Knowledge Vault",
   description: "Capture wisdom while you read. Speak naturally, classified automatically into your personal vault.",
   manifest: "/manifest.json",
@@ -32,7 +47,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-[var(--background)] text-[var(--foreground)] selection:bg-stone-200 dark:selection:bg-stone-800">
+      <body className={`${newsreader.variable} ${inter.variable} min-h-screen bg-[var(--background)] text-[var(--foreground)] font-sans antialiased selection:bg-stone-200 dark:selection:bg-stone-800`}>
         <ServiceWorkerRegister />
         {children}
       </body>

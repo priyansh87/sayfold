@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 120" width="100%" height="100%" fill="none">
+  <defs>
+    <clipPath id="logoCardClip">
+      <rect x="10" y="10" width="100" height="100" rx="26" ry="26" />
+    </clipPath>
+  </defs>
+
+  <!-- Left Icon -->
+  <g transform="translate(0, 0)">
+    <g clip-path="url(#logoCardClip)">
+      <rect x="10" y="10" width="100" height="100" fill="#1F1E1B" />
+      <path d="M 72 10 C 72 32 88 48 110 48 L 110 10 Z" fill="#E8643C" />
+    </g>
+    <!-- Waveform bars -->
+    <g fill="#F6F1E9">
+      <rect x="32" y="52" width="7" height="16" rx="3.5" />
+      <rect x="44" y="42" width="7" height="36" rx="3.5" />
+      <rect x="56" y="34" width="7" height="52" rx="3.5" />
+      <rect x="68" y="44" width="7" height="32" rx="3.5" />
+      <rect x="80" y="53" width="7" height="14" rx="3.5" />
+    </g>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="135" y="80" font-family="-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif" font-size="64" font-weight="800" letter-spacing="-0.03em">
+    <tspan fill="#1F1E1B">say</tspan><tspan fill="#E8643C">fold</tspan>
+  </text>
+</svg>
+
