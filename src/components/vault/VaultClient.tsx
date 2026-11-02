@@ -197,8 +197,8 @@ export function VaultClient({
               onClick={() => setOnlyFavourites(!onlyFavourites)}
               className={`p-1.5 rounded-lg border transition ${
                 onlyFavourites
-                  ? "bg-amber-50 dark:bg-amber-950/40 border-amber-300 text-amber-600"
-                  : "border-stone-200 dark:border-stone-800 text-stone-400 hover:text-stone-700"
+                  ? "bg-amber-50 dark:bg-amber-950/40 border-amber-300 dark:border-amber-800 text-amber-600 dark:text-amber-400"
+                  : "border-stone-200 dark:border-stone-800 text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 hover:bg-stone-100 dark:hover:bg-stone-800"
               }`}
               title="Favourites only"
             >
@@ -365,3 +365,4 @@ export function VaultClient({
     </div>
   );
 }
+

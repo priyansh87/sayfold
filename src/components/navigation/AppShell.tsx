@@ -86,7 +86,7 @@ export function AppShell({ children, userEmail, displayName }: AppShellProps) {
               <button
                 type="submit"
                 title="Sign out"
-                className="p-2 rounded-xl text-stone-500 hover:text-stone-900 dark:hover:text-stone-200 hover:bg-stone-100 dark:hover:bg-stone-900 transition"
+                className="p-2 rounded-xl border border-stone-200/80 dark:border-stone-800 text-stone-500 hover:text-stone-900 dark:hover:text-stone-200 hover:bg-stone-100 dark:hover:bg-stone-800 transition"
               >
                 <LogOut className="w-4 h-4" />
               </button>
