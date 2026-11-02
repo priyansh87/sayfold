@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 import { createClient } from "@/lib/supabase/server";
 import { AppShell } from "@/components/navigation/AppShell";
 import { CaptureProvider } from "@/context/CaptureContext";
@@ -38,7 +39,9 @@ export default async function LibraryPage() {
   return (
     <CaptureProvider>
       <AppShell userEmail={user.email} displayName={user.user_metadata?.display_name}>
-        <LibraryClient initialSources={sourcesWithStats} />
+        <Suspense fallback={<div className="py-12 text-center text-xs text-stone-400">Loading library...</div>}>
+          <LibraryClient initialSources={sourcesWithStats} />
+        </Suspense>
       </AppShell>
     </CaptureProvider>
   );

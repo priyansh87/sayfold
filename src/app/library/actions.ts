@@ -18,6 +18,7 @@ export async function createSource(formData: FormData) {
   const sourceType = (formData.get("source_type") as SourceType) || "book";
   const creator = (formData.get("creator") as string)?.trim() || null;
   const description = (formData.get("description") as string)?.trim() || null;
+  const sourceUrl = (formData.get("source_url") as string)?.trim() || null;
 
   if (!title) {
     return { error: "Title is required" };
@@ -31,6 +32,7 @@ export async function createSource(formData: FormData) {
       source_type: sourceType,
       creator,
       description,
+      source_url: sourceUrl,
       status: "active",
     })
     .select()
@@ -61,6 +63,7 @@ export async function updateSource(
   const sourceType = formData.get("source_type") as SourceType;
   const creator = (formData.get("creator") as string)?.trim() || null;
   const description = (formData.get("description") as string)?.trim() || null;
+  const sourceUrl = (formData.get("source_url") as string)?.trim() || null;
 
   if (!title) {
     return { error: "Title is required" };
@@ -73,6 +76,7 @@ export async function updateSource(
       source_type: sourceType,
       creator,
       description,
+      source_url: sourceUrl,
     })
     .eq("id", sourceId)
     .eq("user_id", user.id);

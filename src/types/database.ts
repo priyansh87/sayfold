@@ -15,6 +15,7 @@ export interface Source {
   source_type: SourceType;
   creator: string | null;
   description: string | null;
+  source_url?: string | null;
   status: string;
   created_at: string;
   [key: string]: unknown;
@@ -98,6 +99,7 @@ export interface Database {
           source_type?: SourceType;
           creator?: string | null;
           description?: string | null;
+          source_url?: string | null;
           status?: string;
           created_at?: string;
           [key: string]: unknown;
@@ -109,6 +111,7 @@ export interface Database {
           source_type?: SourceType;
           creator?: string | null;
           description?: string | null;
+          source_url?: string | null;
           status?: string;
           created_at?: string;
           [key: string]: unknown;

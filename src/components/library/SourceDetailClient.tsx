@@ -18,10 +18,13 @@ import {
   FileText,
   Bookmark,
   Sparkles,
+  Share2,
+  ExternalLink,
 } from "lucide-react";
 import { deleteChapter, deleteSource } from "@/app/library/actions";
 import { ChapterModal } from "@/components/library/ChapterModal";
 import { SourceModal } from "@/components/library/SourceModal";
+import { ShareModal } from "@/components/library/ShareModal";
 import { useCapture } from "@/context/CaptureContext";
 import type { Source, Chapter, KnowledgeEntry, EntryType } from "@/types/database";
 
@@ -43,6 +46,7 @@ export function SourceDetailClient({
   const [isChapterModalOpen, setIsChapterModalOpen] = useState(false);
   const [chapterToEdit, setChapterToEdit] = useState<Chapter | null>(null);
   const [isSourceModalOpen, setIsSourceModalOpen] = useState(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [isDeletingSource, setIsDeletingSource] = useState(false);
 
   const selectedChapter = chapters.find((c) => c.id === selectedChapterId);
@@ -140,6 +144,14 @@ export function SourceDetailClient({
 
         <div className="flex items-center gap-2">
           <button
+            onClick={() => setIsShareModalOpen(true)}
+            className="p-2 rounded-xl text-stone-700 dark:text-stone-300 hover:text-[#E8643C] dark:hover:text-[#E8643C] hover:bg-[#E8643C]/10 transition text-xs flex items-center gap-1.5 border border-stone-200/80 dark:border-stone-800/80"
+            title="Share book summary and notes"
+          >
+            <Share2 className="w-3.5 h-3.5 text-[#E8643C]" />
+            <span>Share</span>
+          </button>
+          <button
             onClick={() => setIsSourceModalOpen(true)}
             className="p-2 rounded-xl text-stone-500 hover:text-stone-900 dark:hover:text-stone-100 hover:bg-stone-100 dark:hover:bg-stone-900 transition text-xs flex items-center gap-1 border border-stone-200/80 dark:border-stone-800/80"
           >
@@ -184,6 +196,23 @@ export function SourceDetailClient({
           <p className="text-xs text-stone-600 dark:text-stone-400 mt-3 max-w-2xl leading-relaxed">
             {source.description}
           </p>
+        )}
+
+        {source.source_url && (
+          <div className="mt-3.5">
+            <a
+              href={source.source_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-stone-200 dark:border-stone-800 bg-stone-50/80 dark:bg-stone-900/50 hover:bg-[#E8643C]/10 hover:border-[#E8643C]/40 text-xs text-stone-700 dark:text-stone-300 hover:text-[#E8643C] transition"
+            >
+              <ExternalLink className="w-3.5 h-3.5 text-[#E8643C]" />
+              <span className="font-medium">Original Link:</span>
+              <span className="max-w-[280px] sm:max-w-md truncate underline underline-offset-2">
+                {source.source_url}
+              </span>
+            </a>
+          </div>
         )}
 
         {/* Active Context Banner */}
@@ -451,6 +480,14 @@ export function SourceDetailClient({
         isOpen={isSourceModalOpen}
         onClose={() => setIsSourceModalOpen(false)}
         sourceToEdit={source}
+      />
+
+      <ShareModal
+        isOpen={isShareModalOpen}
+        onClose={() => setIsShareModalOpen(false)}
+        source={source}
+        chapters={chapters}
+        entries={entries}
       />
     </div>
   );

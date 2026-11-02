@@ -53,6 +53,7 @@ create table if not exists public.sources (
   source_type text not null default 'book' check (source_type in ('book', 'podcast')),
   creator text,
   description text,
+  source_url text,
   status text not null default 'active',
   created_at timestamptz not null default now()
 );

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { BookOpen, Mic, MoreVertical, Edit2, Trash2, ArrowUpRight, FolderGit2 } from "lucide-react";
+import { BookOpen, Mic, MoreVertical, Edit2, Trash2, ArrowUpRight, FolderGit2, ExternalLink } from "lucide-react";
 import { deleteSource } from "@/app/library/actions";
 import type { Source } from "@/types/database";
 
@@ -39,10 +39,34 @@ export function SourceCard({ source, onEdit }: SourceCardProps) {
       <div>
         {/* Top meta row */}
         <div className="flex items-center justify-between mb-3">
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-stone-100 dark:bg-stone-900 text-stone-700 dark:text-stone-300 text-[10px] uppercase tracking-wider font-semibold">
-            {isBook ? <BookOpen className="w-3 h-3" /> : <Mic className="w-3 h-3" />}
-            <span>{isBook ? "Book" : "Podcast"}</span>
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-stone-100 dark:bg-stone-900 text-stone-700 dark:text-stone-300 text-[10px] uppercase tracking-wider font-semibold">
+              {isBook ? <BookOpen className="w-3 h-3" /> : <Mic className="w-3 h-3" />}
+              <span>{isBook ? "Book" : "Podcast"}</span>
+            </span>
+
+            {source.source_url && (
+              <a
+                href={source.source_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                title={`Open source: ${source.source_url}`}
+                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-stone-100/80 hover:bg-[#E8643C]/10 dark:bg-stone-900/80 dark:hover:bg-[#E8643C]/20 text-[10px] text-stone-600 dark:text-stone-400 hover:text-[#E8643C] dark:hover:text-[#E8643C] transition border border-stone-200/60 dark:border-stone-800/60"
+              >
+                <ExternalLink className="w-2.5 h-2.5" />
+                <span className="max-w-[100px] truncate">
+                  {(() => {
+                    try {
+                      return new URL(source.source_url).hostname.replace(/^www\./, "");
+                    } catch {
+                      return "Link";
+                    }
+                  })()}
+                </span>
+              </a>
+            )}
+          </div>
 
           {/* Action Menu */}
           <div className="relative">

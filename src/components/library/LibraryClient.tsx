@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { Plus, BookOpen, Mic, Filter, Library as LibraryIcon } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Plus, BookOpen, Mic, Filter, Library as LibraryIcon, Link2, Sparkles } from "lucide-react";
 import { SourceCard } from "@/components/library/SourceCard";
-import { SourceModal } from "@/components/library/SourceModal";
+import { SourceModal, type SourceModalInitialValues } from "@/components/library/SourceModal";
 import type { Source, SourceType } from "@/types/database";
 
 interface SourceWithStats extends Source {
@@ -16,10 +17,63 @@ interface LibraryClientProps {
 }
 
 export function LibraryClient({ initialSources }: LibraryClientProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const [sources, setSources] = useState<SourceWithStats[]>(initialSources);
   const [filter, setFilter] = useState<"all" | SourceType>("all");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sourceToEdit, setSourceToEdit] = useState<Source | null>(null);
+  const [initialModalValues, setInitialModalValues] = useState<SourceModalInitialValues | undefined>(undefined);
+  const [sharedBannerNotice, setSharedBannerNotice] = useState<string | null>(null);
+
+  // Detect incoming Web Share Target parameters (?url=..., ?title=..., ?text=...)
+  useEffect(() => {
+    const urlParam = searchParams.get("url") || "";
+    const titleParam = searchParams.get("title") || "";
+    const textParam = searchParams.get("text") || "";
+
+    if (urlParam || titleParam || textParam) {
+      let finalUrl = urlParam;
+      let finalTitle = titleParam;
+
+      // Extract URL embedded in text (common on Android share sheets)
+      if (!finalUrl && textParam) {
+        const match = textParam.match(/(https?:\/\/[^\s]+)/i);
+        if (match) {
+          finalUrl = match[0];
+          const remaining = textParam.replace(finalUrl, "").trim();
+          if (!finalTitle && remaining) {
+            finalTitle = remaining;
+          }
+        } else if (!finalTitle) {
+          finalTitle = textParam;
+        }
+      }
+
+      // Infer if the link is a podcast based on common media domains
+      const lowerUrl = finalUrl.toLowerCase();
+      const isPodcast =
+        lowerUrl.includes("spotify.com") ||
+        lowerUrl.includes("apple.com/podcast") ||
+        lowerUrl.includes("podcasts.google.com") ||
+        lowerUrl.includes("youtube.com") ||
+        lowerUrl.includes("youtu.be") ||
+        lowerUrl.includes("podcast");
+
+      setSourceToEdit(null);
+      setInitialModalValues({
+        title: finalTitle,
+        source_url: finalUrl,
+        source_type: isPodcast ? "podcast" : "book",
+      });
+      setIsModalOpen(true);
+      setSharedBannerNotice(finalUrl || finalTitle);
+
+      // Clean query parameters so refreshes don't re-trigger
+      router.replace("/library");
+    }
+  }, [searchParams, router]);
 
   const filteredSources = sources.filter((s) => {
     if (filter === "all") return true;
@@ -27,17 +81,52 @@ export function LibraryClient({ initialSources }: LibraryClientProps) {
   });
 
   const handleEdit = (source: Source) => {
+    setInitialModalValues(undefined);
     setSourceToEdit(source);
     setIsModalOpen(true);
   };
 
   const handleAdd = () => {
     setSourceToEdit(null);
+    setInitialModalValues(undefined);
     setIsModalOpen(true);
+  };
+
+  const handleModalSuccess = (createdSource?: Source) => {
+    setIsModalOpen(false);
+    if (createdSource?.id) {
+      // Immediately open the newly created source so the user can add chapters & voice notes!
+      router.push(`/library/${createdSource.id}`);
+    } else {
+      router.refresh();
+    }
   };
 
   return (
     <div>
+      {/* Shared Link Notice Banner */}
+      {sharedBannerNotice && (
+        <div className="mb-6 p-4 rounded-2xl bg-[#E8643C]/10 border border-[#E8643C]/30 flex items-center justify-between gap-3 animate-fade-in">
+          <div className="flex items-center gap-2.5 text-xs text-stone-800 dark:text-stone-200">
+            <span className="p-1.5 rounded-lg bg-[#E8643C] text-white">
+              <Link2 className="w-3.5 h-3.5" />
+            </span>
+            <span>
+              Shared link ready to catalog:{" "}
+              <strong className="font-semibold max-w-[280px] sm:max-w-md inline-block truncate align-bottom">
+                {sharedBannerNotice}
+              </strong>
+            </span>
+          </div>
+          <button
+            onClick={() => setSharedBannerNotice(null)}
+            className="text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 text-xs px-2 py-1 rounded-lg"
+          >
+            Dismiss
+          </button>
+        </div>
+      )}
+
       {/* Top action row */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <div>
@@ -130,8 +219,9 @@ export function LibraryClient({ initialSources }: LibraryClientProps) {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         sourceToEdit={sourceToEdit}
+        initialValues={initialModalValues}
+        onSuccess={handleModalSuccess}
       />
     </div>
   );
 }
-

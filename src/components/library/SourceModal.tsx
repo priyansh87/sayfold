@@ -1,28 +1,46 @@
 "use client";
 
-import { useState } from "react";
-import { X, Loader2, BookOpen, Mic } from "lucide-react";
+import { useState, useEffect } from "react";
+import { X, Loader2, BookOpen, Mic, Link2 } from "lucide-react";
 import { createSource, updateSource } from "@/app/library/actions";
 import type { Source, SourceType } from "@/types/database";
+
+export interface SourceModalInitialValues {
+  title?: string;
+  creator?: string;
+  source_url?: string;
+  source_type?: SourceType;
+  description?: string;
+}
 
 interface SourceModalProps {
   isOpen: boolean;
   onClose: () => void;
   sourceToEdit?: Source | null;
-  onSuccess?: () => void;
+  initialValues?: SourceModalInitialValues;
+  onSuccess?: (source?: Source) => void;
 }
 
 export function SourceModal({
   isOpen,
   onClose,
   sourceToEdit,
+  initialValues,
   onSuccess,
 }: SourceModalProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [sourceType, setSourceType] = useState<SourceType>(
-    sourceToEdit?.source_type || "book"
+    sourceToEdit?.source_type || initialValues?.source_type || "book"
   );
+
+  useEffect(() => {
+    if (sourceToEdit) {
+      setSourceType(sourceToEdit.source_type);
+    } else if (initialValues?.source_type) {
+      setSourceType(initialValues.source_type);
+    }
+  }, [sourceToEdit, initialValues]);
 
   if (!isOpen) return null;
 
@@ -46,9 +64,15 @@ export function SourceModal({
       setError(res.error);
     } else {
       onClose();
-      if (onSuccess) onSuccess();
+      if (onSuccess) onSuccess((res as any)?.source);
     }
   }
+
+  const defaultTitle = sourceToEdit?.title || initialValues?.title || "";
+  const defaultCreator = sourceToEdit?.creator || initialValues?.creator || "";
+  const defaultUrl = sourceToEdit?.source_url || initialValues?.source_url || "";
+  const defaultDescription =
+    sourceToEdit?.description || initialValues?.description || "";
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-900/40 backdrop-blur-sm animate-fade-in">
@@ -56,16 +80,23 @@ export function SourceModal({
         <button
           onClick={onClose}
           className="absolute top-5 right-5 p-1 text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 rounded-lg transition"
+          aria-label="Close dialog"
         >
           <X className="w-5 h-5" />
         </button>
 
         <h3 className="font-serif text-xl font-medium text-stone-900 dark:text-stone-100">
-          {sourceToEdit ? "Edit Source" : "Add to Library"}
+          {sourceToEdit
+            ? "Edit Source"
+            : initialValues?.source_url
+            ? "Add Shared Link to Library"
+            : "Add to Library"}
         </h3>
         <p className="text-xs text-stone-500 mt-1 mb-5">
           {sourceToEdit
             ? "Update your book or podcast details."
+            : initialValues?.source_url
+            ? "Confirm the title and details to catalog this shared source."
             : "Catalog a book or podcast to attach voice thoughts and chapters."}
         </p>
 
@@ -109,6 +140,7 @@ export function SourceModal({
             </div>
           </div>
 
+          {/* Title */}
           <div>
             <label
               htmlFor="title"
@@ -121,12 +153,14 @@ export function SourceModal({
               name="title"
               type="text"
               required
-              defaultValue={sourceToEdit?.title || ""}
+              defaultValue={defaultTitle}
+              key={`title-${defaultTitle}`}
               placeholder={sourceType === "book" ? "Atomic Habits" : "Huberman Lab"}
-              className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900/50 text-sm text-stone-900 dark:text-stone-100 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-400/40 focus:border-stone-400 transition"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900/50 text-sm text-stone-900 dark:text-stone-100 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-[#E8643C]/40 focus:border-[#E8643C] transition"
             />
           </div>
 
+          {/* Author / Host */}
           <div>
             <label
               htmlFor="creator"
@@ -138,12 +172,42 @@ export function SourceModal({
               id="creator"
               name="creator"
               type="text"
-              defaultValue={sourceToEdit?.creator || ""}
+              defaultValue={defaultCreator}
+              key={`creator-${defaultCreator}`}
               placeholder={sourceType === "book" ? "James Clear" : "Andrew Huberman"}
-              className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900/50 text-sm text-stone-900 dark:text-stone-100 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-400/40 focus:border-stone-400 transition"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900/50 text-sm text-stone-900 dark:text-stone-100 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-[#E8643C]/40 focus:border-[#E8643C] transition"
             />
           </div>
 
+          {/* Source Link / URL */}
+          <div>
+            <label
+              htmlFor="source_url"
+              className="block text-xs font-medium text-stone-700 dark:text-stone-300 mb-1"
+            >
+              Source Link / URL{" "}
+              <span className="text-stone-400 font-normal">(Optional)</span>
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-stone-400">
+                <Link2 className="w-3.5 h-3.5" />
+              </div>
+              <input
+                id="source_url"
+                name="source_url"
+                type="url"
+                defaultValue={defaultUrl}
+                key={`url-${defaultUrl}`}
+                placeholder="https://open.spotify.com/... or goodreads.com/..."
+                className="w-full pl-9 pr-3.5 py-2.5 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900/50 text-sm text-stone-900 dark:text-stone-100 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-[#E8643C]/40 focus:border-[#E8643C] transition"
+              />
+            </div>
+            <p className="text-[11px] text-stone-400 mt-1">
+              Paste an Amazon, Goodreads, Spotify, YouTube, or article link.
+            </p>
+          </div>
+
+          {/* Notes / Description */}
           <div>
             <label
               htmlFor="description"
@@ -155,9 +219,10 @@ export function SourceModal({
               id="description"
               name="description"
               rows={3}
-              defaultValue={sourceToEdit?.description || ""}
-              placeholder="Brief thought about why you are reading this..."
-              className="w-full px-3.5 py-2 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900/50 text-sm text-stone-900 dark:text-stone-100 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-400/40 focus:border-stone-400 transition resize-none"
+              defaultValue={defaultDescription}
+              key={`desc-${defaultDescription}`}
+              placeholder="Brief thought about why you are reading or listening to this..."
+              className="w-full px-3.5 py-2 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900/50 text-sm text-stone-900 dark:text-stone-100 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-[#E8643C]/40 focus:border-[#E8643C] transition resize-none"
             />
           </div>
 
@@ -184,4 +249,3 @@ export function SourceModal({
     </div>
   );
 }
-
