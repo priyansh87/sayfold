@@ -63,3 +63,4 @@ testAskMyMemory().catch((err) => {
   console.error("Ask My Memory test error:", err);
   process.exit(1);
 });
+

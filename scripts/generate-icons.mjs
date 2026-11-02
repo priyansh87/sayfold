@@ -78,3 +78,4 @@ const png512 = createSimplePng(512, 512, 24, 24, 27, 255);
 fs.writeFileSync(path.join(dir, "icon-512.png"), png512);
 
 console.log("PWA Icons generated successfully in public/icons/");
+

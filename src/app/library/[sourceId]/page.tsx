@@ -59,3 +59,4 @@ export default async function SourceDetailPage({ params }: SourceDetailPageProps
     </CaptureProvider>
   );
 }
+

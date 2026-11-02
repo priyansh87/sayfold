@@ -99,3 +99,4 @@ export async function toggleFavourite(entryId: string, currentStatus: boolean) {
   revalidatePath("/vault");
   return { success: true, is_favourite: !currentStatus };
 }
+
