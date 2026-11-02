@@ -64,25 +64,25 @@ Conventional note-taking tools demand high friction: unlocking your phone, openi
 
 ```mermaid
 flowchart TD
-    User([Reader / Listener]) -->|Spoken Voice Note| Client[PWA Client / Audio Recorder]
-    Client -->|Audio Blob| API[/api/capture]
+    User["Reader / Listener"] -->|Spoken Voice Note| Client["PWA Client / Audio Recorder"]
+    Client -->|Audio Blob| API["Next.js Route: /api/capture"]
     
-    subgraph Groq LPU Cloud
-      API -->|WAV/WebM Audio| Whisper[Groq Whisper large-v3-turbo]
-      Whisper -->|Clean Transcript| Graph[LangGraph Orchestrator]
-      Graph -->|Extraction & Classification| LLM[Groq Open-Weight LLMs]
+    subgraph GroqCloud["Groq LPU Cloud"]
+      API -->|WAV / WebM Audio| Whisper["Groq Whisper large-v3-turbo"]
+      Whisper -->|Clean Transcript| Graph["LangGraph Pipeline"]
+      Graph -->|Classification & Extraction| LLM["Open-Weight LLMs"]
     end
 
-    subgraph Supabase Database
-      Graph -->|Structured JSON| Supabase[(PostgreSQL with RLS)]
-      Supabase --> SourcesTable[(sources)]
-      Supabase --> ChaptersTable[(chapters)]
-      Supabase --> EntriesTable[(knowledge_entries + fts)]
+    subgraph SupabaseDB["Supabase Database"]
+      Graph -->|Structured JSON| Supabase["PostgreSQL with RLS"]
+      Supabase --> SourcesTable["sources (Books & Pods)"]
+      Supabase --> ChaptersTable["chapters (Structural Context)"]
+      Supabase --> EntriesTable["knowledge_entries + fts GIN"]
     end
 
-    User -->|Natural Query| SearchUI[Ask My Memory]
+    User -->|Natural Query| SearchUI["Ask My Memory"]
     SearchUI -->|Postgres FTS GIN| Supabase
-    Supabase -->|Grounded Context| GroundedLLM[Grounded Answer Generator]
+    Supabase -->|Grounded Context| GroundedLLM["Grounded Answer Generator"]
     GroundedLLM -->|Answer with Citations| SearchUI
 ```
 
