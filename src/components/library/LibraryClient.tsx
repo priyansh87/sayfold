@@ -51,13 +51,13 @@ export function LibraryClient({ initialSources }: LibraryClientProps) {
 
         <div className="flex items-center gap-2">
           {/* Filter Pills */}
-          <div className="inline-flex items-center bg-stone-100 dark:bg-stone-900/60 p-1 rounded-xl border border-stone-200/60 dark:border-stone-800/60 text-xs">
+          <div className="inline-flex items-center bg-stone-200/50 dark:bg-[#1E1C18] p-1 rounded-xl border border-[var(--card-border)] text-xs">
             <button
               onClick={() => setFilter("all")}
               className={`px-3 py-1 rounded-lg transition font-medium ${
                 filter === "all"
-                  ? "bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 shadow-xs"
-                  : "text-stone-500 hover:text-stone-900 dark:hover:text-stone-200"
+                  ? "bg-white dark:bg-[#2A2823] text-[#E8643C] font-semibold shadow-xs"
+                  : "text-[var(--muted)] hover:text-[var(--foreground)]"
               }`}
             >
               All ({sources.length})
@@ -66,8 +66,8 @@ export function LibraryClient({ initialSources }: LibraryClientProps) {
               onClick={() => setFilter("book")}
               className={`px-3 py-1 rounded-lg transition font-medium ${
                 filter === "book"
-                  ? "bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 shadow-xs"
-                  : "text-stone-500 hover:text-stone-900 dark:hover:text-stone-200"
+                  ? "bg-white dark:bg-[#2A2823] text-[#E8643C] font-semibold shadow-xs"
+                  : "text-[var(--muted)] hover:text-[var(--foreground)]"
               }`}
             >
               Books
@@ -76,8 +76,8 @@ export function LibraryClient({ initialSources }: LibraryClientProps) {
               onClick={() => setFilter("podcast")}
               className={`px-3 py-1 rounded-lg transition font-medium ${
                 filter === "podcast"
-                  ? "bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 shadow-xs"
-                  : "text-stone-500 hover:text-stone-900 dark:hover:text-stone-200"
+                  ? "bg-white dark:bg-[#2A2823] text-[#E8643C] font-semibold shadow-xs"
+                  : "text-[var(--muted)] hover:text-[var(--foreground)]"
               }`}
             >
               Podcasts
@@ -86,7 +86,7 @@ export function LibraryClient({ initialSources }: LibraryClientProps) {
 
           <button
             onClick={handleAdd}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 text-xs font-medium hover:bg-stone-800 dark:hover:bg-white transition active:scale-[0.98] shadow-xs"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#E8643C] hover:bg-[#D4532B] text-white text-xs font-semibold transition active:scale-[0.98] shadow-xs"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>Add Source</span>

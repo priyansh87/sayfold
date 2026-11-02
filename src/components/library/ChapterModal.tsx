@@ -124,7 +124,7 @@ export function ChapterModal({
             <button
               type="submit"
               disabled={loading}
-              className="px-4 py-2 rounded-xl bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 text-xs font-medium hover:bg-stone-800 dark:hover:bg-white transition flex items-center gap-1.5 shadow-xs disabled:opacity-60"
+              className="px-4 py-2 rounded-xl bg-[#E8643C] hover:bg-[#D4532B] text-white text-xs font-semibold transition flex items-center gap-1.5 shadow-xs disabled:opacity-60 active:scale-[0.98]"
             >
               {loading && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
               <span>{chapterToEdit ? "Save Changes" : "Add Chapter"}</span>

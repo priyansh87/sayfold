@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { BookOpen, Layers, Search, Mic, LogOut, Sparkles } from "lucide-react";
 import { logout } from "@/app/auth/actions";
@@ -41,29 +42,36 @@ export function AppShell({ children, userEmail, displayName }: AppShellProps) {
   return (
     <div className="min-h-screen flex flex-col bg-[var(--background)] text-[var(--foreground)]">
       {/* Top Header */}
-      <header className="sticky top-0 z-30 backdrop-blur-md bg-[var(--background)]/85 border-b border-stone-200/80 dark:border-stone-800/80">
+      <header className="sticky top-0 z-30 backdrop-blur-md bg-[var(--background)]/90 border-b border-[var(--card-border)]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <Link href="/library" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-xl bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 flex items-center justify-center font-serif text-sm font-semibold shadow-xs">
-              S
+            <div className="relative w-8 h-8 rounded-lg overflow-hidden shrink-0 shadow-xs">
+              <Image
+                src="/brand/sayfold-icon.svg"
+                alt="Sayfold"
+                width={32}
+                height={32}
+                className="w-full h-full object-contain"
+                priority
+              />
             </div>
             <div>
-              <span className="font-serif text-lg font-medium tracking-tight text-stone-900 dark:text-stone-100">
-                Sayfold
+              <span className="font-sans font-bold text-xl tracking-tight text-[var(--foreground)]">
+                say<span className="text-[#E8643C]">fold</span>
               </span>
             </div>
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-1 bg-stone-100 dark:bg-stone-900/60 p-1 rounded-xl border border-stone-200/60 dark:border-stone-800/60 text-xs">
+          <nav className="hidden md:flex items-center gap-1 bg-stone-200/50 dark:bg-[#1E1C18] p-1 rounded-xl border border-[var(--card-border)] text-xs">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg transition font-medium ${
                   item.isActive
-                    ? "bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 shadow-xs"
-                    : "text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100"
+                    ? "bg-white dark:bg-[#2A2823] text-[#E8643C] dark:text-[#E8643C] shadow-xs font-semibold"
+                    : "text-[var(--muted)] hover:text-[var(--foreground)]"
                 }`}
               >
                 <item.icon className="w-3.5 h-3.5" />
@@ -76,7 +84,7 @@ export function AppShell({ children, userEmail, displayName }: AppShellProps) {
           <div className="flex items-center gap-2.5">
             <button
               onClick={() => openCapture()}
-              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 text-xs font-medium hover:bg-stone-800 dark:hover:bg-white transition active:scale-[0.98] shadow-xs"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#E8643C] hover:bg-[#D4532B] text-white text-xs font-semibold shadow-xs transition active:scale-[0.98]"
             >
               <Mic className="w-3.5 h-3.5 stroke-[2]" />
               <span>Capture Thought</span>
@@ -86,7 +94,7 @@ export function AppShell({ children, userEmail, displayName }: AppShellProps) {
               <button
                 type="submit"
                 title="Sign out"
-                className="p-2 rounded-xl border border-stone-200/80 dark:border-stone-800 text-stone-500 hover:text-stone-900 dark:hover:text-stone-200 hover:bg-stone-100 dark:hover:bg-stone-800 transition"
+                className="p-2 rounded-xl border border-[var(--card-border)] text-[var(--muted)] hover:text-[var(--foreground)] hover:bg-black/5 dark:hover:bg-white/5 transition"
               >
                 <LogOut className="w-4 h-4" />
               </button>
@@ -104,18 +112,18 @@ export function AppShell({ children, userEmail, displayName }: AppShellProps) {
       <CaptureOverlay />
 
       {/* Mobile Floating Bottom Bar */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[var(--background)]/90 backdrop-blur-lg border-t border-stone-200/80 dark:border-stone-800/80 px-4 py-2">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[var(--background)]/95 backdrop-blur-lg border-t border-[var(--card-border)] px-4 py-2">
         <div className="max-w-md mx-auto flex items-center justify-around relative">
           {/* Library tab */}
           <Link
             href="/library"
             className={`flex flex-col items-center gap-1 py-1 px-3 text-xs transition ${
               pathname.startsWith("/library")
-                ? "text-stone-900 dark:text-stone-100 font-medium"
-                : "text-stone-500 hover:text-stone-800 dark:hover:text-stone-300"
+                ? "text-[#E8643C] font-semibold"
+                : "text-[var(--muted)] hover:text-[var(--foreground)]"
             }`}
           >
-            <BookOpen className="w-5 h-5 stroke-[1.7]" />
+            <BookOpen className="w-5 h-5 stroke-[1.8]" />
             <span className="text-[10px]">Library</span>
           </Link>
 
@@ -124,11 +132,11 @@ export function AppShell({ children, userEmail, displayName }: AppShellProps) {
             <button
               onClick={() => openCapture()}
               aria-label="Capture voice note"
-              className="w-14 h-14 rounded-full bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 flex items-center justify-center shadow-lg active:scale-95 transition-transform hover:scale-105 border-4 border-[var(--background)]"
+              className="w-14 h-14 rounded-full bg-[#E8643C] hover:bg-[#D4532B] text-white flex items-center justify-center shadow-lg shadow-[#E8643C]/25 active:scale-95 transition-transform hover:scale-105 border-4 border-[var(--background)] ring-2 ring-[#E8643C]/30"
             >
               <Mic className="w-6 h-6 stroke-[2]" />
             </button>
-            <span className="text-[9px] uppercase tracking-wider font-semibold text-stone-600 dark:text-stone-400 mt-1">
+            <span className="text-[9px] uppercase tracking-wider font-bold text-[#E8643C] mt-1">
               Capture
             </span>
           </div>
@@ -138,11 +146,11 @@ export function AppShell({ children, userEmail, displayName }: AppShellProps) {
             href="/vault"
             className={`flex flex-col items-center gap-1 py-1 px-3 text-xs transition ${
               pathname.startsWith("/vault")
-                ? "text-stone-900 dark:text-stone-100 font-medium"
-                : "text-stone-500 hover:text-stone-800 dark:hover:text-stone-300"
+                ? "text-[#E8643C] font-semibold"
+                : "text-[var(--muted)] hover:text-[var(--foreground)]"
             }`}
           >
-            <Layers className="w-5 h-5 stroke-[1.7]" />
+            <Layers className="w-5 h-5 stroke-[1.8]" />
             <span className="text-[10px]">Vault</span>
           </Link>
 
@@ -151,11 +159,11 @@ export function AppShell({ children, userEmail, displayName }: AppShellProps) {
             href="/search"
             className={`flex flex-col items-center gap-1 py-1 px-3 text-xs transition ${
               pathname.startsWith("/search")
-                ? "text-stone-900 dark:text-stone-100 font-medium"
-                : "text-stone-500 hover:text-stone-800 dark:hover:text-stone-300"
+                ? "text-[#E8643C] font-semibold"
+                : "text-[var(--muted)] hover:text-[var(--foreground)]"
             }`}
           >
-            <Sparkles className="w-5 h-5 stroke-[1.7]" />
+            <Sparkles className="w-5 h-5 stroke-[1.8]" />
             <span className="text-[10px]">Ask</span>
           </Link>
         </div>

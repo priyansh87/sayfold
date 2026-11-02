@@ -63,19 +63,19 @@ export function SearchAskClient() {
     <div className="max-w-3xl mx-auto space-y-8">
       {/* Header */}
       <div className="text-center">
-        <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-stone-100 dark:bg-stone-900 border border-stone-200/80 dark:border-stone-800/80 text-stone-800 dark:text-stone-200 mb-3 shadow-xs">
+        <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-[#E8643C]/10 border border-[#E8643C]/20 text-[#E8643C] mb-3 shadow-xs">
           <Sparkles className="w-5 h-5 stroke-[1.8]" />
         </div>
-        <h1 className="text-2xl sm:text-3xl font-serif font-medium tracking-tight text-stone-900 dark:text-stone-100">
+        <h1 className="text-2xl sm:text-3xl font-serif font-medium tracking-tight text-[var(--foreground)]">
           Ask My Memory
         </h1>
-        <p className="text-xs text-stone-500 dark:text-stone-400 mt-1 max-w-md mx-auto leading-relaxed">
+        <p className="text-xs text-[var(--muted)] mt-1 max-w-md mx-auto leading-relaxed">
           Ask questions across your captured books, podcasts, ideas, and quotes. Answers are grounded strictly in your personal vault.
         </p>
       </div>
 
       {/* Query Input Box */}
-      <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-2xl p-3 sm:p-4 shadow-sm focus-within:border-stone-400 dark:focus-within:border-stone-600 transition">
+      <div className="bg-[var(--card)] border border-[var(--card-border)] rounded-2xl p-3 sm:p-4 shadow-sm focus-within:border-[#E8643C]/60 transition">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -89,13 +89,13 @@ export function SearchAskClient() {
             onChange={(e) => setQuery(e.target.value)}
             disabled={loading}
             placeholder="Ask your reading companion anything..."
-            className="flex-1 px-2.5 py-2 bg-transparent text-sm font-serif text-stone-900 dark:text-stone-100 placeholder:text-stone-400 dark:placeholder:text-stone-500 focus:outline-none"
+            className="flex-1 px-2.5 py-2 bg-transparent text-sm font-serif text-[var(--foreground)] placeholder:text-[var(--muted)] focus:outline-hidden"
           />
 
           <button
             type="submit"
             disabled={loading || !query.trim()}
-            className="p-2.5 rounded-xl transition flex items-center justify-center shadow-xs disabled:cursor-not-allowed bg-stone-900 text-white hover:bg-stone-800 dark:bg-stone-100 dark:text-stone-900 dark:hover:bg-white disabled:bg-stone-200 disabled:text-stone-400 dark:disabled:bg-stone-800 dark:disabled:text-stone-600"
+            className="p-2.5 rounded-xl transition flex items-center justify-center shadow-xs disabled:cursor-not-allowed bg-[#E8643C] text-white hover:bg-[#D4532B] disabled:opacity-40"
             aria-label="Ask"
           >
             {loading ? (
@@ -107,13 +107,13 @@ export function SearchAskClient() {
         </form>
 
         {/* Suggestion Chips */}
-        <div className="mt-3 pt-3 border-t border-stone-100 dark:border-stone-800/80 flex flex-wrap gap-2">
+        <div className="mt-3 pt-3 border-t border-[var(--card-border)] flex flex-wrap gap-2">
           {promptSuggestions.map((suggestion) => (
             <button
               key={suggestion}
               onClick={() => handleAsk(suggestion)}
               disabled={loading}
-              className="text-xs px-3 py-1.5 rounded-xl bg-stone-100/80 dark:bg-stone-900/80 text-stone-700 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-800 hover:text-stone-900 dark:hover:text-stone-100 border border-stone-200/80 dark:border-stone-800 transition active:scale-[0.98] text-left"
+              className="text-xs px-3 py-1.5 rounded-xl bg-black/5 dark:bg-white/5 text-[var(--foreground)] hover:border-[#E8643C]/40 hover:text-[#E8643C] border border-[var(--card-border)] transition active:scale-[0.98] text-left"
             >
               {suggestion}
             </button>

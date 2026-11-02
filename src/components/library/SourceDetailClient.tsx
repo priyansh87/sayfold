@@ -187,11 +187,11 @@ export function SourceDetailClient({
         )}
 
         {/* Active Context Banner */}
-        <div className="mt-6 pt-5 border-t border-stone-100 dark:border-stone-900 flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div className="mt-6 pt-5 border-t border-[var(--card-border)] flex flex-wrap items-center justify-between gap-3 text-xs">
           <div className="flex items-center gap-2">
-            <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-stone-500">Active capture focus:</span>
-            <span className="font-medium text-stone-900 dark:text-stone-100">
+            <span className="inline-block w-2.5 h-2.5 rounded-full bg-[#E8643C] animate-pulse" />
+            <span className="text-[var(--muted)]">Active capture focus:</span>
+            <span className="font-semibold text-[var(--foreground)]">
               {source.title} {selectedChapter ? `· Chapter ${selectedChapter.chapter_number}` : ""}
             </span>
           </div>
@@ -205,7 +205,7 @@ export function SourceDetailClient({
                 chapterTitle: selectedChapter?.title || null,
               })
             }
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 font-medium hover:bg-stone-800 dark:hover:bg-white transition text-xs shadow-xs"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#E8643C] hover:bg-[#D4532B] text-white font-semibold transition text-xs shadow-xs active:scale-[0.98]"
           >
             <Mic className="w-3.5 h-3.5 stroke-[2]" />
             <span>Record Voice Note</span>
@@ -217,19 +217,19 @@ export function SourceDetailClient({
       <div>
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h2 className="font-serif text-lg font-medium text-stone-900 dark:text-stone-100">
+            <h2 className="font-serif text-lg font-medium text-[var(--foreground)]">
               Chapters
             </h2>
-            <p className="text-xs text-stone-500">
+            <p className="text-xs text-[var(--muted)]">
               Select a chapter to focus your capture and view its entries.
             </p>
           </div>
 
           <button
             onClick={handleAddChapter}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-stone-200 dark:border-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-900 transition text-xs font-medium"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[var(--card-border)] text-[var(--foreground)] hover:bg-[#E8643C]/10 hover:border-[#E8643C]/40 hover:text-[#E8643C] transition text-xs font-semibold"
           >
-            <Plus className="w-3.5 h-3.5" />
+            <Plus className="w-3.5 h-3.5 text-[#E8643C]" />
             <span>Add Chapter</span>
           </button>
         </div>

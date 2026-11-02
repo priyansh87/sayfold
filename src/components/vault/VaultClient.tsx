@@ -166,10 +166,10 @@ export function VaultClient({
               <button
                 key={t}
                 onClick={() => setSelectedType(t)}
-                className={`px-2.5 py-1 rounded-lg font-medium transition ${
+                className={`px-3 py-1 rounded-lg font-medium transition ${
                   selectedType === t
-                    ? "bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 shadow-xs"
-                    : "text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-800"
+                    ? "bg-[#E8643C] text-white shadow-xs font-semibold"
+                    : "text-[var(--muted)] hover:bg-black/5 dark:hover:bg-white/5 hover:text-[var(--foreground)]"
                 }`}
               >
                 {t}

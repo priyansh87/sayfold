@@ -238,8 +238,8 @@ export function CaptureOverlay() {
         {stage === "recording" && (
           <div className="py-6 flex flex-col items-center">
             {/* Context Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-stone-100 dark:bg-stone-900 text-stone-600 dark:text-stone-400 text-xs mb-8">
-              <span className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-stone-100 dark:bg-[#1E1C18] border border-[var(--card-border)] text-[var(--muted)] text-xs mb-8">
+              <span className="w-2 h-2 rounded-full bg-[#E8643C] animate-ping" />
               <span>
                 {activeContext.sourceTitle
                   ? `Focus: ${activeContext.sourceTitle}${activeContext.chapterTitle ? ` · ${activeContext.chapterTitle}` : ""}`
@@ -249,17 +249,17 @@ export function CaptureOverlay() {
 
             {/* Pulsing Mic Visualizer */}
             <div className="relative mb-8">
-              <div className="absolute inset-0 rounded-full bg-stone-400/20 dark:bg-stone-600/20 animate-ping opacity-75" />
-              <div className="relative w-28 h-28 rounded-full bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 flex items-center justify-center shadow-xl">
+              <div className="absolute inset-0 rounded-full bg-[#E8643C]/25 animate-ping opacity-75" />
+              <div className="relative w-28 h-28 rounded-full bg-[#E8643C] text-white flex items-center justify-center shadow-xl shadow-[#E8643C]/30">
                 <Mic className="w-12 h-12 stroke-[1.8]" />
               </div>
             </div>
 
             {/* Live Timer */}
-            <div className="font-mono text-3xl font-light tracking-widest text-stone-900 dark:text-stone-100 mb-2">
+            <div className="font-mono text-3xl font-light tracking-widest text-[var(--foreground)] mb-2">
               {formatTimer(recordingTime)}
             </div>
-            <p className="text-xs text-stone-500 mb-8 max-w-xs">
+            <p className="text-xs text-[var(--muted)] mb-8 max-w-xs">
               Speak naturally. Share an idea, quote, vocab word, or open question.
             </p>
 
@@ -267,13 +267,13 @@ export function CaptureOverlay() {
             <div className="flex items-center gap-4">
               <button
                 onClick={handleCancelAndClose}
-                className="px-4 py-2.5 rounded-xl border border-stone-200 dark:border-stone-800 text-stone-600 dark:text-stone-400 text-xs font-medium hover:bg-stone-100 dark:hover:bg-stone-900 transition"
+                className="px-4 py-2.5 rounded-xl border border-[var(--card-border)] text-[var(--muted)] hover:text-[var(--foreground)] text-xs font-medium hover:bg-black/5 dark:hover:bg-white/5 transition"
               >
                 Cancel
               </button>
               <button
                 onClick={handleStopAndProcess}
-                className="px-6 py-2.5 rounded-xl bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 text-xs font-medium flex items-center gap-2 hover:bg-stone-800 dark:hover:bg-white active:scale-95 transition shadow-sm"
+                className="px-6 py-2.5 rounded-xl bg-[#E8643C] hover:bg-[#D4532B] text-white text-xs font-semibold flex items-center gap-2 active:scale-95 transition shadow-sm"
               >
                 <Square className="w-3.5 h-3.5 fill-current" />
                 <span>Done Speaking</span>

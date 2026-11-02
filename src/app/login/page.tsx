@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { login } from "@/app/auth/actions";
-import { BookOpen, Sparkles, ArrowRight, Loader2 } from "lucide-react";
+import { ArrowRight, Loader2 } from "lucide-react";
 
 export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
@@ -28,14 +29,23 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         {/* Brand header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-stone-100 dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-stone-800 dark:text-stone-200 mb-4 shadow-sm">
-            <BookOpen className="w-6 h-6 stroke-[1.5]" />
-          </div>
-          <h1 className="text-3xl font-serif tracking-tight text-stone-900 dark:text-stone-100">
-            Sayfold
-          </h1>
-          <p className="mt-1.5 text-xs uppercase tracking-widest text-stone-500 font-medium">
-            Voice-First Reading Vault
+          <Link href="/" className="inline-flex flex-col items-center gap-3 group">
+            <div className="w-14 h-14 rounded-2xl overflow-hidden shadow-xs">
+              <Image
+                src="/brand/sayfold-icon.svg"
+                alt="Sayfold"
+                width={56}
+                height={56}
+                className="w-full h-full object-contain"
+                priority
+              />
+            </div>
+            <span className="font-sans font-bold text-3xl tracking-tight text-[var(--foreground)]">
+              say<span className="text-[#E8643C]">fold</span>
+            </span>
+          </Link>
+          <p className="mt-1 text-xs uppercase tracking-widest text-[var(--muted)] font-medium">
+            Voice-First Knowledge Vault
           </p>
         </div>
 
@@ -94,7 +104,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full mt-2 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 text-sm font-medium hover:bg-stone-800 dark:hover:bg-white active:scale-[0.99] transition disabled:opacity-60"
+              className="w-full mt-2 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-[#E8643C] hover:bg-[#D4532B] text-white text-sm font-semibold active:scale-[0.99] transition disabled:opacity-60 shadow-xs"
             >
               {loading ? (
                 <>
