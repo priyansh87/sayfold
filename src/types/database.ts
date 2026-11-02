@@ -5,6 +5,7 @@ export interface Profile {
   id: string;
   display_name: string | null;
   created_at: string;
+  [key: string]: unknown;
 }
 
 export interface Source {
@@ -16,6 +17,7 @@ export interface Source {
   description: string | null;
   status: string;
   created_at: string;
+  [key: string]: unknown;
 }
 
 export interface Chapter {
@@ -25,6 +27,7 @@ export interface Chapter {
   title: string;
   chapter_number: number;
   created_at: string;
+  [key: string]: unknown;
 }
 
 export interface VocabMetadata {
@@ -56,36 +59,126 @@ export interface KnowledgeEntry {
   fts?: string;
   created_at: string;
   updated_at: string;
+  [key: string]: unknown;
 }
+
+export type GenericRelationship = {
+  foreignKeyName: string;
+  columns: string[];
+  isOneToOne?: boolean;
+  referencedRelation: string;
+  referencedColumns: string[];
+};
 
 export interface Database {
   public: {
     Tables: {
       profiles: {
         Row: Profile;
-        Insert: Partial<Profile> & { id: string };
-        Update: Partial<Profile>;
+        Insert: {
+          id: string;
+          display_name?: string | null;
+          created_at?: string;
+          [key: string]: unknown;
+        };
+        Update: {
+          id?: string;
+          display_name?: string | null;
+          created_at?: string;
+          [key: string]: unknown;
+        };
+        Relationships: GenericRelationship[];
       };
       sources: {
         Row: Source;
-        Insert: Omit<Source, "id" | "created_at"> & { id?: string; created_at?: string };
-        Update: Partial<Source>;
+        Insert: {
+          id?: string;
+          user_id: string;
+          title: string;
+          source_type?: SourceType;
+          creator?: string | null;
+          description?: string | null;
+          status?: string;
+          created_at?: string;
+          [key: string]: unknown;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          title?: string;
+          source_type?: SourceType;
+          creator?: string | null;
+          description?: string | null;
+          status?: string;
+          created_at?: string;
+          [key: string]: unknown;
+        };
+        Relationships: GenericRelationship[];
       };
       chapters: {
         Row: Chapter;
-        Insert: Omit<Chapter, "id" | "created_at"> & { id?: string; created_at?: string };
-        Update: Partial<Chapter>;
+        Insert: {
+          id?: string;
+          source_id: string;
+          user_id: string;
+          title: string;
+          chapter_number?: number;
+          created_at?: string;
+          [key: string]: unknown;
+        };
+        Update: {
+          id?: string;
+          source_id?: string;
+          user_id?: string;
+          title?: string;
+          chapter_number?: number;
+          created_at?: string;
+          [key: string]: unknown;
+        };
+        Relationships: GenericRelationship[];
       };
       knowledge_entries: {
         Row: KnowledgeEntry;
-        Insert: Omit<KnowledgeEntry, "id" | "created_at" | "updated_at"> & {
+        Insert: {
           id?: string;
+          user_id: string;
+          source_id?: string | null;
+          chapter_id?: string | null;
+          entry_type: EntryType;
+          title?: string | null;
+          original_transcription: string;
+          cleaned_content: string;
+          tags?: string[];
+          metadata?: KnowledgeEntryMetadata;
+          is_favourite?: boolean;
+          fts?: string;
           created_at?: string;
           updated_at?: string;
+          [key: string]: unknown;
         };
-        Update: Partial<KnowledgeEntry>;
+        Update: {
+          id?: string;
+          user_id?: string;
+          source_id?: string | null;
+          chapter_id?: string | null;
+          entry_type?: EntryType;
+          title?: string | null;
+          original_transcription?: string;
+          cleaned_content?: string;
+          tags?: string[];
+          metadata?: KnowledgeEntryMetadata;
+          is_favourite?: boolean;
+          fts?: string;
+          created_at?: string;
+          updated_at?: string;
+          [key: string]: unknown;
+        };
+        Relationships: GenericRelationship[];
       };
     };
+    Views: Record<string, never>;
+    Functions: Record<string, never>;
+    Enums: Record<string, never>;
+    CompositeTypes: Record<string, never>;
   };
 }
-

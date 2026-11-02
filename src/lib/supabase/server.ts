@@ -13,7 +13,7 @@ export async function createClient() {
     throw new Error("Missing Supabase public environment variables");
   }
 
-  return createServerClient<Database>(supabaseUrl, supabaseAnonKey, {
+  return createServerClient(supabaseUrl, supabaseAnonKey, {
     cookies: {
       getAll() {
         return cookieStore.getAll();
