@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { BookOpen, Layers, Search, Mic, LogOut, Sparkles } from "lucide-react";
 import { logout } from "@/app/auth/actions";
 import { useCapture } from "@/context/CaptureContext";
+import { CaptureOverlay } from "@/components/capture/CaptureOverlay";
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -98,6 +99,9 @@ export function AppShell({ children, userEmail, displayName }: AppShellProps) {
       <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 pb-28 md:pb-12">
         {children}
       </main>
+
+      {/* Full-screen Voice Capture Overlay */}
+      <CaptureOverlay />
 
       {/* Mobile Floating Bottom Bar */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[var(--background)]/90 backdrop-blur-lg border-t border-stone-200/80 dark:border-stone-800/80 px-4 py-2">
