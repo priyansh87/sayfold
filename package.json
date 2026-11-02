@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@clerk/nextjs": "^7.9.23",
     "@langchain/core": "^0.3.40",
     "@langchain/langgraph": "^0.2.45",
     "@supabase/ssr": "^0.5.2",

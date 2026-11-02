@@ -45,7 +45,7 @@ export async function updateSession(request: NextRequest) {
       request.nextUrl.pathname.startsWith("/login") ||
       request.nextUrl.pathname.startsWith("/signup");
     const isPublicApi =
-      request.nextUrl.pathname.startsWith("/auth");
+      request.nextUrl.pathname.startsWith("/auth/callback");
 
     // Protect app routes
     if (!user && !isAuthPage && !isPublicApi && request.nextUrl.pathname !== "/") {

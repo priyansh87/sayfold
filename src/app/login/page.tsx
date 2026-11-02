@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { login } from "@/app/auth/actions";
 import { ArrowRight, Loader2 } from "lucide-react";
-import { ClerkGoogleButton } from "@/components/auth/ClerkGoogleButton";
 
 export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
@@ -55,22 +54,9 @@ export default function LoginPage() {
           <h2 className="text-lg font-serif font-medium text-stone-900 dark:text-stone-100 mb-1">
             Sign In
           </h2>
-          <p className="text-xs text-stone-500 mb-5">
-            Open your vault with Google or your email.
+          <p className="text-xs text-stone-500 mb-6">
+            Enter your email and password to open your vault.
           </p>
-
-          {/* Clerk Google Sign In */}
-          <div className="mb-4">
-            <ClerkGoogleButton mode="signin" />
-          </div>
-
-          <div className="relative flex items-center justify-center mb-5">
-            <div className="border-t border-[var(--card-border)] w-full" />
-            <span className="bg-[var(--card)] px-3 text-[10px] text-stone-400 uppercase tracking-wider font-medium">
-              or with email
-            </span>
-            <div className="border-t border-[var(--card-border)] w-full" />
-          </div>
 
           {error && (
             <div className="mb-4 p-3 rounded-xl bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900/50 text-xs text-red-600 dark:text-red-400">
