@@ -15,6 +15,17 @@ export default function SignupPage() {
     setError(null);
     setLoading(true);
 
+    // Request notification permission during user gesture if supported
+    if (typeof window !== "undefined" && "Notification" in window) {
+      if (Notification.permission === "default") {
+        try {
+          await Notification.requestPermission();
+        } catch {
+          // Ignore if permission prompt fails or is dismissed
+        }
+      }
+    }
+
     const formData = new FormData(event.currentTarget);
     const result = await signup(formData);
 

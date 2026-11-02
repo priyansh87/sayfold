@@ -55,7 +55,7 @@ export async function signup(formData: FormData) {
   }
 
   revalidatePath("/", "layout");
-  redirect("/library");
+  redirect("/library?welcome=1");
 }
 
 export async function logout() {

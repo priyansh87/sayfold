@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -7,6 +8,8 @@ import { BookOpen, Layers, Search, Mic, LogOut, Sparkles } from "lucide-react";
 import { logout } from "@/app/auth/actions";
 import { useCapture } from "@/context/CaptureContext";
 import { CaptureOverlay } from "@/components/capture/CaptureOverlay";
+import { NotificationBell } from "@/components/notifications/NotificationBell";
+import { WelcomeNotificationManager } from "@/components/notifications/WelcomeNotificationManager";
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -90,6 +93,8 @@ export function AppShell({ children, userEmail, displayName }: AppShellProps) {
               <span>Capture Thought</span>
             </button>
 
+            <NotificationBell displayName={displayName} />
+
             <form action={logout}>
               <button
                 type="submit"
@@ -105,6 +110,9 @@ export function AppShell({ children, userEmail, displayName }: AppShellProps) {
 
       {/* Main Body */}
       <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 pb-28 md:pb-12">
+        <Suspense fallback={null}>
+          <WelcomeNotificationManager displayName={displayName} />
+        </Suspense>
         {children}
       </main>
 
