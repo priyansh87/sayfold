@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Newsreader, Inter } from "next/font/google";
 import "./globals.css";
 import { ServiceWorkerRegister } from "@/components/pwa/ServiceWorkerRegister";
+import { Analytics } from "@vercel/analytics/next";
 
 const newsreader = Newsreader({
   subsets: ["latin"],
@@ -50,6 +51,7 @@ export default function RootLayout({
       <body className={`${newsreader.variable} ${inter.variable} min-h-screen bg-[var(--background)] text-[var(--foreground)] font-sans antialiased selection:bg-stone-200 dark:selection:bg-stone-800`}>
         <ServiceWorkerRegister />
         {children}
+        <Analytics />
       </body>
     </html>
   );
